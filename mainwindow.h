@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "menu.h"
 #include "nivel_inicial.h"
+#include "nivel_principal.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,12 +17,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     menu *inicio;
-    nivel_inicial * nivel_1;
+    nivel_inicial *nivel_1;
+    nivel_principal *nivel_2;
     ~MainWindow();
 
 private slots:
     void menu_inicial();
-    void inicia_principal();
+    void inicial_principal();
 private:
     Ui::MainWindow *ui;
 };

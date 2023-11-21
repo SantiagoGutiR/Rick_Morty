@@ -4,10 +4,10 @@ nivel_inicial::nivel_inicial()
 {
     escena = new QGraphicsScene;
     fondo = new Objetos();
-    piezas_encontradas.reserve(7);
-    for(short i = 0; i < piezas_encontradas.length(); i++){
-        piezas_encontradas[i] = false;
+    for(short i = 0; i < 7; i++){
+        piezas_encontradas.push_back(false);
     }
+    piezas_encontradas.shrink_to_fit();
     for(short i = 0; i < 7 ; i++){
         piezas.push_back(new QPushButton);
     }
@@ -18,18 +18,34 @@ nivel_inicial::nivel_inicial()
     imagenes.shrink_to_fit();
 
     piezas[0]->setGeometry(450*0.92, 375*0.92, 42, 36);
-    //imagenes[0]->Setup_Imagen();
+    imagenes[0]->Setup_Imagen(":/Imagenes/Pistola.png", 0, 0, 1200, 929, 0.03571);
+    imagenes[0]->setPos(450*0.92, 375*0.92);
 
 
     fondo->Setup_Imagen(":/Imagenes/Fondo_inicial.jpeg", 0, 0, 1080, 607, 0.92);
     escena->addWidget(piezas[0]);
     escena->addItem(fondo);
+    escena->addItem(imagenes[0]);
 
+    connect(piezas[0], SIGNAL(clicked(bool)), this, SLOT(boton_valido()));
 }
 
 QGraphicsScene *nivel_inicial::getEscena() const
 {
     return escena;
+}
+
+void nivel_inicial::arma_encontrada(int i)
+{
+    piezas[i]->setEnabled(false);
+    imagenes[i]->setVisible(false);
+    piezas_encontradas[i] = true;
+    emit cambio_nivel();
+}
+
+void nivel_inicial::boton_valido()
+{//Slot
+    arma_encontrada(0);
 }
 
 nivel_inicial::~nivel_inicial()

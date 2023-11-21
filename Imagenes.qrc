@@ -1,7 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>Imagenes/Inicio_fondo.png</file>
         <file>Imagenes/Fondo_inicial.jpeg</file>
         <file>Imagenes/Pistola.png</file>
+        <file>Imagenes/Fondo_menu.jpeg</file>
+        <file>Imagenes/Fondo_principal.jpeg</file>
     </qresource>
 </RCC>

@@ -8,10 +8,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     inicio = new menu();
     nivel_1 = new nivel_inicial();
+    nivel_2 = new nivel_principal();
 
     ui->graphicsView->setScene(inicio->getEscena());
     connect(inicio->getJugar(), SIGNAL(clicked(bool)), this, SLOT(menu_inicial()));
-    connect(nivel_1, SIGNAL(cambio_nivel()), this, SLOT(inicia_principal()));
+    connect(nivel_1, SIGNAL(cambio_nivel()), this, SLOT(inicial_principal()));
 }
 
 MainWindow::~MainWindow()
@@ -19,14 +20,15 @@ MainWindow::~MainWindow()
     delete ui;
     delete inicio;
     delete nivel_1;
+    delete nivel_2;
 }
 
 void MainWindow::menu_inicial() //PENDIENTE POR CUADRAR
-{//slot
+{//Slot
     ui->graphicsView->setScene(nivel_1->getEscena());
 }
 
-void MainWindow::inicia_principal()
-{
-    ui->graphicsView->hide();
+void MainWindow::inicial_principal()
+{//Slot
+    ui->graphicsView->setScene(nivel_2->getEscena());
 }

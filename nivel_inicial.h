@@ -14,6 +14,9 @@ private:
     QVector <QPushButton*> piezas;
     QVector <Objetos*> imagenes;
 
+    void arma_encontrada(int i);
+private slots:
+    void boton_valido();
 public:
     nivel_inicial();
     ~nivel_inicial();

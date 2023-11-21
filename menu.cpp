@@ -3,13 +3,12 @@
 menu::menu()
 {
     escena = new QGraphicsScene;
-    jugar = new QPushButton;
+    jugar = new QPushButton("Jugar");
     fondo = new Objetos;
 
-    fondo->Setup_Imagen(":/Imagenes/Inicio_fondo.png", 0, 0, 495, 275, 2.2);
+    fondo->Setup_Imagen(":/Imagenes/Fondo_menu.jpeg", 0, 0, 1366, 808, 0.73);
     fondo->setPos(0,0);
-    jugar->setText("Jugar");
-    jugar->setGeometry(450, 400, 100, 50);
+    jugar->setGeometry(450, 200, 100, 50);
     setup_escena();
 }
 
