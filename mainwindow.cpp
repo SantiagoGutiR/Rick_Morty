@@ -11,8 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     nivel_2 = new nivel_principal();
 
     ui->graphicsView->setScene(inicio->getEscena());
-    connect(inicio->getJugar(), SIGNAL(clicked(bool)), this, SLOT(menu_inicial()));
-    connect(nivel_1, SIGNAL(cambio_nivel()), this, SLOT(inicial_principal()));
+    connect(inicio, SIGNAL(cambio_escena()), this, SLOT(menu_inicial()));
+    connect(nivel_1, SIGNAL(cambio_nivel(int)), this, SLOT(inicial_principal(int)));
 }
 
 MainWindow::~MainWindow()
@@ -23,12 +23,13 @@ MainWindow::~MainWindow()
     delete nivel_2;
 }
 
-void MainWindow::menu_inicial() //PENDIENTE POR CUADRAR
+void MainWindow::menu_inicial()
 {//Slot
+    nivel_1->getTiempo_limite()->start(20000);
     ui->graphicsView->setScene(nivel_1->getEscena());
 }
 
-void MainWindow::inicial_principal()
+void MainWindow::inicial_principal(int bonus)
 {//Slot
     ui->graphicsView->setScene(nivel_2->getEscena());
 }

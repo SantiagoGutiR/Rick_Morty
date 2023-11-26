@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDebug>
 #include "menu.h"
 #include "nivel_inicial.h"
 #include "nivel_principal.h"
@@ -23,7 +24,7 @@ public:
 
 private slots:
     void menu_inicial();
-    void inicial_principal();
+    void inicial_principal(int bonus);
 private:
     Ui::MainWindow *ui;
 };

@@ -5,10 +5,6 @@ nivel_inicial::nivel_inicial()
     escena = new QGraphicsScene;
     fondo = new Objetos();
     tiempo_limite = new QTimer();
-    for(short i = 0; i < 7; i++){
-        piezas_encontradas.push_back(false);
-    }
-    piezas_encontradas.shrink_to_fit();
     for(short i = 0; i < 7 ; i++){
         piezas.push_back(new QPushButton);
     }
@@ -18,7 +14,7 @@ nivel_inicial::nivel_inicial()
     }
     imagenes.shrink_to_fit();
 
-    tiempo_limite->start(30000);
+    armas_encontradas = 0;
     ocultar_armas();
     setup_escena();
     connect(piezas[0], SIGNAL(clicked(bool)), this, SLOT(boton1_valido()));
@@ -43,20 +39,23 @@ void nivel_inicial::setup_escena()
     }
 }
 
+void nivel_inicial::asignar_bonus()
+{
+    if(armas_encontradas < 3)armas_encontradas = 200;
+    else if(armas_encontradas >= 3 && armas_encontradas < 6) armas_encontradas = 400;
+    else if(armas_encontradas >= 6) armas_encontradas = 600;
+}
+
 void nivel_inicial::arma_encontrada(int i)
 {
-    short contador = 0;
     piezas[i]->setEnabled(false);
     imagenes[i]->setVisible(false);
-    piezas_encontradas[i] = true;
+    armas_encontradas ++;
 
-    for(int j = 0; j < piezas_encontradas.length() ; j++ ){
-        if(piezas_encontradas[j])contador++;
-    }
-
-    if(contador == 7){
+    if(armas_encontradas == 7){
         tiempo_limite->stop();
-        emit cambio_nivel();
+        armas_encontradas = 600;
+        emit cambio_nivel(armas_encontradas);
     }
 }
 
@@ -98,7 +97,8 @@ void nivel_inicial::boton7_valido()
 void nivel_inicial::tiempo_agotado()
 {//SLot
     tiempo_limite->stop();
-    emit cambio_nivel();
+    asignar_bonus();
+    emit cambio_nivel(armas_encontradas);
 }
 
 nivel_inicial::~nivel_inicial()
@@ -116,6 +116,11 @@ nivel_inicial::~nivel_inicial()
 QGraphicsScene *nivel_inicial::getEscena() const
 {
     return escena;
+}
+
+QTimer *nivel_inicial::getTiempo_limite() const
+{
+    return tiempo_limite;
 }
 
 void nivel_inicial::ocultar_armas()

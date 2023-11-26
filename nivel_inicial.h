@@ -11,7 +11,7 @@ class nivel_inicial: public QObject
 private:
     QGraphicsScene *escena;
     Objetos *fondo;
-    QVector <bool> piezas_encontradas;
+    int armas_encontradas;
     QVector <QPushButton*> piezas;
     QVector <Objetos*> imagenes;
     QTimer *tiempo_limite;
@@ -19,6 +19,7 @@ private:
     void ocultar_armas();
     void arma_encontrada(int i);
     void setup_escena();
+    void asignar_bonus();
 private slots:
     void boton1_valido();
     void boton2_valido();
@@ -33,8 +34,10 @@ public:
     ~nivel_inicial();
     QGraphicsScene *getEscena() const;
 
+    QTimer *getTiempo_limite() const;
+
 signals:
-    void cambio_nivel();
+    void cambio_nivel(int bonus);
 };
 
 #endif // NIVEL_INICIAL_H
