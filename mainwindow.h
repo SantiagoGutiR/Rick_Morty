@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QDebug>
+#include <QKeyEvent>
 #include "menu.h"
 #include "nivel_inicial.h"
 #include "nivel_principal.h"
@@ -17,9 +17,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    menu *inicio;
-    nivel_inicial *nivel_1;
-    nivel_principal *nivel_2;
+    void keyPressEvent(QKeyEvent *event);
     ~MainWindow();
 
 private slots:
@@ -27,5 +25,8 @@ private slots:
     void inicial_principal(int bonus);
 private:
     Ui::MainWindow *ui;
+    menu *inicio;
+    nivel_inicial *nivel_1;
+    nivel_principal *nivel_2;
 };
 #endif // MAINWINDOW_H

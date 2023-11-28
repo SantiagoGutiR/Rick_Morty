@@ -43,7 +43,7 @@ void menu::boton_jugar()
 {//Slot
     jugar->setEnabled(false);
     escena->addItem(historieta[0]);
-    tiempo_animacion->start(2000);
+    tiempo_animacion->start(4000);
 }
 
 
