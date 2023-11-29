@@ -1,6 +1,6 @@
 #ifndef NIVEL_PRINCIPAL_H
 #define NIVEL_PRINCIPAL_H
-#define total_plataformas 1
+#define total_plataformas 8
 #define total_balas 1
 
 #include "objetos.h"
@@ -24,6 +24,9 @@ private:
     QTimer *tiempo_disparo;
 
     void setup_escena();
+    void cargar_imagenes();
+    void crear_balas();
+    void poscionar_plataformas();
 private slots:
     void jugador_caida();
     void jugador_salto();

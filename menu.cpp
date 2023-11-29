@@ -31,7 +31,10 @@ void menu::setup_escena()
 
 void menu::mostrar_historieta()
 {
-    if(frame_historieta < historieta.length())escena->addItem(historieta[frame_historieta]);
+    if(frame_historieta < historieta.length()){
+        escena->removeItem(historieta[frame_historieta-1]);
+        escena->addItem(historieta[frame_historieta]);
+    }
     frame_historieta++;
     if(frame_historieta > historieta.length()){
         tiempo_animacion->stop();

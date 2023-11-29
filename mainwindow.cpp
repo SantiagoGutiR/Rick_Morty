@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
     nivel_1 = new nivel_inicial();
     nivel_2 = new nivel_principal();
 
-
     ui->graphicsView->setScene(nivel_2->getEscena());
     nivel_2->getTiempo_disparo()->start(10);
 
@@ -41,4 +40,5 @@ void MainWindow::menu_inicial()
 void MainWindow::inicial_principal(int bonus)
 {//Slot
     ui->graphicsView->setScene(nivel_2->getEscena());
+    nivel_2->getTiempo_disparo()->start(10);
 }
