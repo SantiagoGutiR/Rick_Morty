@@ -17,3 +17,8 @@ void balas::mover()
 
     if(!(this->x() > 0 && this->x() < 968)||!(this->y() > 0 && this->y() < 568)) setPos(xo, yo);
 }
+
+void balas::devolver()
+{
+    setPos(xo, yo);
+}
