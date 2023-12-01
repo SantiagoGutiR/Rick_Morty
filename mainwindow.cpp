@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->graphicsView->setScene(nivel_2->getEscena());
     nivel_2->getTiempo_disparo()->start(15);
-    nivel_2->getTiempo_nivel()->start(5000);
+    nivel_2->getTiempo_nivel()->start(200000);
 
     //ui->graphicsView->setScene(inicio->getEscena());
     connect(inicio, SIGNAL(cambio_escena()), this, SLOT(menu_inicial()));

@@ -20,6 +20,7 @@ nivel_principal::nivel_principal()
         plataformas.push_back(new Objetos);
     }
     plataformas.shrink_to_fit();
+    restricciones.push_back(new Objetos); //Pendiente
 
 
     actualizar_parametros();
@@ -55,6 +56,8 @@ void nivel_principal::cargar_imagenes()
     for(int i = 0 ; i < total_plataformas ; i++){
         plataformas[i]->Setup_Imagen(":/Imagenes/Plataforma.png", 0, 0, 955, 87, 0.31);
     }
+    restricciones[0]->Setup_Imagen(":/Imagenes/Plataforma.png", 0, 0, 955, 87, 0.314); //Pendiente
+    restricciones[0]->setVisible(false);
 
     score->setStyleSheet("background-color: black; color: white;");
     score->setFont(QFont("Snap ITC", 20));
@@ -70,6 +73,7 @@ void nivel_principal::cargar_imagenes()
 void nivel_principal::poscionar_plataformas()
 {
     plataformas[0]->setPos(125,150);
+    restricciones[0]->setPos(124,151);//Pendiente
     plataformas[1]->setPos(425,250);
     plataformas[2]->setPos(125,350);
     plataformas[3]->setPos(425,450);
@@ -88,6 +92,7 @@ void nivel_principal::setup_escena()
     for(int i = 0 ; i < pistolas.length() ; i++){
         escena->addItem(pistolas[i]);
     }
+    escena->addItem(restricciones[0]); //Pendiente
     escena->addWidget(score);
     escena->addWidget(lives);
     escena->addItem(jugador);
@@ -115,7 +120,13 @@ void nivel_principal::jugador_salto()
 {//Slot
     jugador->salto(0, 9.6);
     if(tiempo_caida->isActive()) tiempo_caida->stop();
-    if(verificar_choque(*jugador, plataformas)){
+    if(verificar_choque(*jugador, restricciones)){
+        jugador->setPos(jugador->x(), jugador->y()+velocidad);
+        tiempo_salto->stop();
+        jugador->setN(1000);
+        tiempo_caida->start(1000*0.01);
+    }
+    else if(verificar_choque(*jugador, plataformas)){
         tiempo_salto->stop();
         jugador->setN(1000);
     }

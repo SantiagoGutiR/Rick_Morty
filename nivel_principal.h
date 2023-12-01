@@ -18,6 +18,7 @@ private:
     QGraphicsScene *escena;
     QVector <Objetos*> fondo;
     QVector <Objetos*> plataformas;
+    QVector <Objetos*> restricciones;
     QVector <balas*> pistolas;
     personaje *jugador;
     QTimer *tiempo_caida;
