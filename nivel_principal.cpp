@@ -5,7 +5,7 @@ nivel_principal::nivel_principal()
     vidas = 3;
     nivel_actual = 1;
     escena = new QGraphicsScene();
-    for(short i = 0; i < 3 ; i++){
+    for(short i = 0; i < 7 ; i++){
         fondo.push_back(new Objetos);
     }
     fondo.shrink_to_fit();
@@ -18,9 +18,9 @@ nivel_principal::nivel_principal()
     lives = new QLabel("Vidas: ");
     for(int i = 0 ; i < total_plataformas ; i++){
         plataformas.push_back(new Objetos);
+        restricciones.push_back(new Objetos);
     }
     plataformas.shrink_to_fit();
-    restricciones.push_back(new Objetos); //Pendiente
 
 
     actualizar_parametros();
@@ -37,11 +37,11 @@ nivel_principal::nivel_principal()
 
 void nivel_principal::crear_balas()
 {
-    for(short n = 0 ; n < 2 ; n++){
-        pistolas.push_back(new balas('A', 968, 300));//Falta las otras balas
-    }
-    pistolas.shrink_to_fit();
-
+    pistolas.push_back(new balas('D', 5, 118));
+    pistolas.push_back(new balas('A', 968, 218));
+    pistolas.push_back(new balas('D', 5, 318));
+    pistolas.push_back(new balas('A', 968, 418));
+    pistolas.shrink_to_fit();    
 }
 
 void nivel_principal::cargar_imagenes()
@@ -49,15 +49,25 @@ void nivel_principal::cargar_imagenes()
     fondo[0]->Setup_Imagen(":/Imagenes/Fondo_principal.jpeg", 0, 0, 1600, 940, 0.62);
     fondo[1]->Setup_Imagen(":/Imagenes/Imagenes_finales.jpeg", 0, 0, 990, 590, 1);
     fondo[2]->Setup_Imagen(":/Imagenes/Imagenes_finales.jpeg", 1007, 0, 990, 590, 1);
+    fondo[3]->Setup_Imagen(":/Imagenes/Cañones.png", 0, 0, 847, 509, 0.09);
+    fondo[4]->Setup_Imagen(":/Imagenes/Cañones.png", 0, 0, 847, 509, 0.09);
+    fondo[5]->Setup_Imagen(":/Imagenes/Cañones.png", 909, 0, 847, 509, 0.09);
+    fondo[6]->Setup_Imagen(":/Imagenes/Cañones.png", 909, 0, 847, 509, 0.09);
 
-    jugador->Setup_Imagen(":/Imagenes/Pistola.png", 0, 0, 1200, 929, 0.03);//Organizar
-    jugador->setPos(400, 300);
+    fondo[3]->setPos(0, 105);
+    fondo[4]->setPos(0, 305);
+    fondo[5]->setPos(920, 205);
+    fondo[6]->setPos(920,405);
+
+
+    jugador->Setup_Imagen(":/Imagenes/Rick.png", 136, 902, 121, 160, 0.26);
+    jugador->setPos(470, 207);
 
     for(int i = 0 ; i < total_plataformas ; i++){
-        plataformas[i]->Setup_Imagen(":/Imagenes/Plataforma.png", 0, 0, 955, 87, 0.31);
+        plataformas[i]->Setup_Imagen(":/Imagenes/Plataforma.png", 0, 0, 930, 87, 0.31);
+        restricciones[i]->Setup_Imagen(":/Imagenes/Plataforma.png", 0, 0, 952, 87, 0.314);
+        restricciones[i]->setVisible(false);
     }
-    restricciones[0]->Setup_Imagen(":/Imagenes/Plataforma.png", 0, 0, 955, 87, 0.314); //Pendiente
-    restricciones[0]->setVisible(false);
 
     score->setStyleSheet("background-color: black; color: white;");
     score->setFont(QFont("Snap ITC", 20));
@@ -66,21 +76,29 @@ void nivel_principal::cargar_imagenes()
     score->setGeometry(175*0.62, 875*0.62, 370*0.62, 60*0.62);
     lives->setGeometry(990*0.62, 875*0.62, 370*0.62, 60*0.62);
 
-    pistolas[0]->Setup_Imagen(":/Imagenes/Pistola.png", 0, 0, 1200, 929, 0.025); //Hacer el for con la imagen elegida
-    pistolas[1]->Setup_Imagen(":/Imagenes/Pistola.png", 0, 0, 1200, 929, 0.025);
+    for(int i = 0 ; i < pistolas.length(); i++){
+        pistolas[i]->Setup_Imagen(":/Imagenes/Balas.png", 0, 0, 196, 198, 0.1);
+    }
 }
 
 void nivel_principal::poscionar_plataformas()
 {
     plataformas[0]->setPos(125,150);
-    restricciones[0]->setPos(124,151);//Pendiente
+    restricciones[0]->setPos(124,152);
     plataformas[1]->setPos(425,250);
+    restricciones[1]->setPos(424,252);
     plataformas[2]->setPos(125,350);
+    restricciones[2]->setPos(124,352);
     plataformas[3]->setPos(425,450);
+    restricciones[3]->setPos(424,452);
     plataformas[4]->setPos(525,150);
+    restricciones[4]->setPos(524,152);
     plataformas[5]->setPos(225,250);
+    restricciones[5]->setPos(224,252);
     plataformas[6]->setPos(525,350);
+    restricciones[6]->setPos(524,352);
     plataformas[7]->setPos(225,450);
+    restricciones[7]->setPos(224,452);
 }
 
 void nivel_principal::setup_escena()
@@ -88,11 +106,12 @@ void nivel_principal::setup_escena()
     escena->addItem(fondo[0]);
     for(int i = 0 ; i < total_plataformas ; i++){
         escena->addItem(plataformas[i]);
+        escena->addItem(restricciones[i]);
     }
-    for(int i = 0 ; i < pistolas.length() ; i++){
+    for(int i = 0 ; i < total_balas ; i++){
         escena->addItem(pistolas[i]);
     }
-    escena->addItem(restricciones[0]); //Pendiente
+    for(short i = 3 ; i < fondo.length() ; i++)escena->addItem(fondo[i]);
     escena->addWidget(score);
     escena->addWidget(lives);
     escena->addItem(jugador);
@@ -101,15 +120,44 @@ void nivel_principal::setup_escena()
 
 void nivel_principal::moviento_personaje(QKeyEvent *event)
 {
-    if(!verificar_choque(*jugador, plataformas)) tiempo_caida->start(1000*0.01);
+    if(!verificar_choque(*jugador, plataformas)) tiempo_caida->start(1000*0.008);
     if(event->key() == Qt::Key_D)jugador->movimiento('D');
     else if(event->key() == Qt::Key_A)jugador->movimiento('A');
-    else if(event->key() == Qt::Key_W) tiempo_salto->start(1000*0.01);
+    else if(event->key() == Qt::Key_W && verificar_choque(*jugador, plataformas)) tiempo_salto->start(1000*0.008);
+
+    if(verificar_choque(*jugador, plataformas) && verificar_choque(*jugador, restricciones)){
+        while(verificar_choque(*jugador, restricciones)){
+            jugador->setPos(jugador->x(), jugador->y()+velocidad);
+        }
+    }
+    validar_zona();
+}
+
+void nivel_principal::volver_zona_valida()
+{
+    for(int i = 0 ; i < pistolas.length() ; i++){
+        pistolas[i]->devolver();
+    }
+    jugador->setPos(470, 205);
+
+}
+
+void nivel_principal::validar_zona()
+{
+    if(jugador->validar_limites()){
+        vidas --;
+        actualizar_parametros();
+        volver_zona_valida();
+        if(vidas == 0){
+            fin_juego();
+        }
+    }
 }
 
 void nivel_principal::jugador_caida()
 {//Slot
     jugador->salto(0, 8);
+    validar_zona();
     if(verificar_choque(*jugador, plataformas)){
         tiempo_caida->stop();
         jugador->setN(1000);
@@ -120,6 +168,7 @@ void nivel_principal::jugador_salto()
 {//Slot
     jugador->salto(0, 9.6);
     if(tiempo_caida->isActive()) tiempo_caida->stop();
+    validar_zona();
     if(verificar_choque(*jugador, restricciones)){
         jugador->setPos(jugador->x(), jugador->y()+velocidad);
         tiempo_salto->stop();
@@ -134,7 +183,7 @@ void nivel_principal::jugador_salto()
 
 void nivel_principal::disparar()
 {//Slot
-    for(int i = 0 ; i < total_balas*nivel_actual ; i++){
+    for(int i = 0 ; i < total_balas; i++){
         if(i < pistolas.length())pistolas[i]->mover();
     }
     validar_movimiento_bala();
@@ -149,16 +198,17 @@ void nivel_principal::aumentar_nivel()
         tiempo_disparo->stop();
         nivel_actual++;
         puntaje += 100;
-        tiempo_disparo->start(8);
-        escena->removeItem(plataformas[4]);
-        escena->removeItem(plataformas[5]);
-        escena->removeItem(plataformas[6]);
-        escena->removeItem(plataformas[7]);
+        tiempo_disparo->start(8);;
         for(short n = 0; n < 4 ; n++){
+            escena->removeItem(plataformas[4+n]);
+            escena->removeItem(restricciones[4+n]);
             delete plataformas[4+n];
+            delete restricciones[4+n];
             plataformas.pop_back();
+            restricciones.pop_back();
         }
         plataformas.shrink_to_fit();
+        restricciones.shrink_to_fit();
     }
 }
 
@@ -214,6 +264,7 @@ nivel_principal::~nivel_principal(){
     }
     for(int i = 0 ; i < plataformas.length() ; i++){
         delete plataformas[i];
+        delete restricciones[i];
     }
     delete jugador;
     delete tiempo_caida;

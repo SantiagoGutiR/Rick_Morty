@@ -1,6 +1,6 @@
 #ifndef PERSONAJE_H
 #define PERSONAJE_H
-#define velocidad 3
+#define velocidad 5
 
 #include "objetos.h"
 
@@ -14,6 +14,7 @@ public:
     void movimiento(char direccion);
     void salto(float vxo, float vyo);
     void setN(int newN);
+    bool validar_limites();
 };
 
 #endif // PERSONAJE_H

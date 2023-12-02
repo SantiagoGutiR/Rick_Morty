@@ -1,7 +1,7 @@
 #ifndef NIVEL_PRINCIPAL_H
 #define NIVEL_PRINCIPAL_H
 #define total_plataformas 8
-#define total_balas 1
+#define total_balas 4
 
 #include "objetos.h"
 #include "personaje.h"
@@ -35,6 +35,8 @@ private:
     void poscionar_plataformas();
     void validar_movimiento_bala();
     void actualizar_parametros();
+    void volver_zona_valida();
+    void validar_zona();
     void fin_juego();
     void ganar();
 private slots:
