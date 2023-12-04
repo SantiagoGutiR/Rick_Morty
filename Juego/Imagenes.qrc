@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Imagenes/Fondo_inicial.jpeg</file>
+        <file>Imagenes/Pistola.png</file>
+        <file>Imagenes/Fondo_menu.jpeg</file>
+        <file>Imagenes/Fondo_principal.jpeg</file>
+        <file>Imagenes/Historia.png</file>
+        <file>Imagenes/Plataforma.png</file>
+        <file>Imagenes/Imagenes_finales.jpeg</file>
+        <file>Imagenes/Rick.png</file>
+        <file>Imagenes/Balas.png</file>
+        <file>Imagenes/Cañones.png</file>
+    </qresource>
+</RCC>
